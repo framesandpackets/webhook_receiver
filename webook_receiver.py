@@ -1,19 +1,18 @@
-from flask import json
-from flask import request
-from flask import Flask
+from flask import json, request, Flask, jsonify
+
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def base():
     return 'For receiver send POST to /receiver/ '
 
 @app.route('/receiver', methods=['POST'])
 def api_message():
     if request.headers['Content-Type'] == "application/json":
-        get_info = json.dumps(request.json)
-        print (get_info)
+        get_info = jsonify(request.json)
         return get_info
+        print (get_info)
 
 if __name__ == '__main__':
     app.run(debug=True)
